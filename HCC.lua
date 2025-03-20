@@ -1,44 +1,38 @@
 -- HCC - Hardcore Challenges addon
 
--- Saved variables for each character's challenge status
 HCC_Settings = HCC_Settings or {}
 
--- Create event frame
 local HCC_Frame = CreateFrame("Frame")
-HCC_Frame:Hide() -- Hide the frame initially
+HCC_Frame:Hide()
 local initialized = false
 
--- Debug function to ensure messages appear
 local function HCC_Debug(msg)
     if DEFAULT_CHAT_FRAME then
         DEFAULT_CHAT_FRAME:AddMessage("[HCC] " .. msg, 1.0, 1.0, 0.0)
     end
 end
 
--- Registering events
 local events = {
     "VARIABLES_LOADED",
     "PARTY_INVITE_REQUEST",
     "AUCTION_HOUSE_SHOW",
     "TRADE_SHOW",
     "MAIL_SHOW",
-    "DUEL_REQUESTED"
 }
 
 for _, event in ipairs(events) do
     HCC_Frame:RegisterEvent(event)
-    HCC_Debug("Registered event: " .. event)
+--    HCC_Debug("Registered event: " .. event)
 end
 
--- Ensure the frame is visible for event handling
 HCC_Frame:Show()
 
 HCC_Frame:SetScript("OnEvent", function()
     local event = event
-    if not event then
-        HCC_Debug("ERROR: Event name is nil!")
-        return
-    end
+--   if not event then
+--       HCC_Debug("ERROR: Event name is nil!")
+--       return
+--   end
 
     if event == "VARIABLES_LOADED" then
         initialized = true
@@ -46,12 +40,12 @@ HCC_Frame:SetScript("OnEvent", function()
         return
     end
 
-    if not initialized then
-        HCC_Debug("Ignoring event: " .. event .. " (not initialized)")
-        return
-    end
+--    if not initialized then
+--        HCC_Debug("Ignoring event: " .. event .. " (not initialized)")
+--        return
+--    end
 
-    HCC_Debug("Event triggered: " .. event)
+--    HCC_Debug("Event triggered: " .. event)
     
     if event == "PARTY_INVITE_REQUEST" and HCC_Settings.lonewolf then
         HCC_Debug("Declining party invite...")
@@ -67,13 +61,9 @@ HCC_Frame:SetScript("OnEvent", function()
     elseif event == "MAIL_SHOW" and HCC_Settings.specialdeliveries then
         HCC_Debug("Closing mailbox...")
         CloseMail()
-    elseif event == "DUEL_REQUESTED" and HCC_Settings.lonewolf then
-        HCC_Debug("Declining duel...")
-        CancelDuel()
     end
 end)
 
--- Slash command registration
 SLASH_HCC1 = "/hcc"
 
 SlashCmdList["HCCCHECK"] = function()
