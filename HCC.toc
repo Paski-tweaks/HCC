@@ -1,0 +1,7 @@
+## Interface: 11200
+## Title: Hardcore Challenges (HCC)
+## Notes: Toggle various challenges like No Party, No Trade, etc.
+## Author: Paski
+## Version: 1.0
+## SavedVariablesPerCharacter: HCC_Settings
+HCC.lua
